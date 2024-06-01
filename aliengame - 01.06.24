@@ -1,0 +1,31 @@
+#29/05/24
+
+import random,pgzrun
+
+TITLE = 'Alien: The Game'
+
+WIDTH = 500
+HEIGHT = 500
+
+message =''
+
+img = Actor('alienimagejetlearn')
+
+img.pos = 250,250
+def draw():
+    screen.clear()
+    screen.fill('dark blue')
+
+    img.draw()
+    screen.draw.text(message,center = (100,50),fontsize=20,color='pink')
+
+def on_mouse_down(pos):
+    global message
+    if img.collidepoint(pos):
+        message = 'You hit the alien!'
+        img.x = random.randint(50,450)
+        img.y = random.randint(50,450)
+    else:
+        message = 'You missed :('
+
+pgzrun.go()
