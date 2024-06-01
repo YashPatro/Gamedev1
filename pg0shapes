@@ -1,0 +1,40 @@
+29/05/24
+
+import pgzrun,random
+
+
+WIDTH = 520
+HEIGHT = 520
+
+'''def draw():
+    height = 100
+    width = 380
+    screen.fill('pale green')
+    screen.draw.circle((200,200),(100),'red
+    for i in range(25):
+        r= random.randint(0,255)
+        g= random.randint(0,255)
+        b= random.randint(0,255)
+
+        obj = Rect((10,100),(width,height))
+        obj.center=(200,200)
+        screen.draw.rect(obj,(r,g,b))
+        height+=10
+        width-=10
+'''
+
+#homework - practice
+
+def draw():
+    screen.fill('light grey')
+    r1 = 250
+    x = 260
+
+    for i in range(50):
+        r= random.randint(0,255)
+        g= random.randint(0,255)
+        b= random.randint(0,255)
+        
+        screen.draw.circle((x,x),(r1),(r,g,b))
+
+        r1=r1-5
