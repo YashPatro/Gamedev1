@@ -1,0 +1,39 @@
+08/06/24
+
+import pgzrun
+
+TITLE = 'Alien shooting'
+
+WIDTH = 500
+HEIGHT = 200
+
+alien = Actor('alienimagejetlearn')
+ 
+alien.pos = 50,50
+
+HEIGHT = alien.height+30
+
+def draw():
+    screen.clear()
+    screen.fill('dark blue')
+     
+    alien.draw()
+
+
+def update():
+    alien.left+=2
+
+    if alien.left>WIDTH:
+        alien.right=0
+
+    
+def on_mouse_down(pos):
+    if alien.collidepoint(pos):
+        sounds.eepsound.play()
+        print('EEP you hit me!')
+
+    else:
+        print('ha... you missed!')
+
+
+pgzrun.go()
