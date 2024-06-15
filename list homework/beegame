@@ -1,0 +1,64 @@
+#15/06/24
+
+#homewrok
+
+list = []
+
+row = int(input('tell me how many rows you would like in the list'))
+
+column = int(input('tell me how many columns you would like in the list'))
+
+
+for i in range(column):
+    list.append(0)
+    for i in range(len(list)):
+        print('\n')
+    
+print(list)
+``
+
+#beegame
+import random,pgzrun
+
+WIDTH = 600
+HEIGHT = 600
+
+
+score = 0
+
+bee = Actor('bee')
+
+flower = Actor('flower')
+
+bee.pos = 200,200
+
+flower.pos = 500,200
+
+def draw():
+    screen.blit('grassback',(0,0))
+    bee.draw()
+    flower.draw()
+    screen.draw.text('score: '+str(score),(100,100),fontsize=40,color='red')
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
