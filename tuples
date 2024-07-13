@@ -1,0 +1,52 @@
+13/07/24
+
+tup = (3,'hello',89)
+
+print(type(tup))
+
+tup1 = ('yash',)
+
+print(type(tup1))
+
+l1 = [1,'yash',78,2.41]
+
+l1 = tuple(l1)
+'''
+print(type(l1))
+
+print(l1[1])'''
+'''
+l1[2] = 99
+
+print(l1)'''
+
+#concatenation of python tuples
+print(tup+l1)
+
+#nested tuples
+
+print(tup,l1)
+#repititon
+
+print(tup1*3)
+
+#tuple slicing
+
+print(l1[1:3])
+
+'''#deleting tuples
+
+del tup1
+
+print(tup1)'''
+
+var = 'python'
+
+var = tuple(var)
+print(var)
+
+address = (35,'blueberry road','banana hill','London',890355)
+
+(num,road,town,city,pin) = address
+
+print(city)
