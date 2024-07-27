@@ -1,0 +1,83 @@
+due 27/07/24
+import pgzrun
+
+from random import randint
+
+from time import time
+
+TITLE = 'Match the Satilites!'
+
+WIDTH = 500
+
+HEIGHT = 500
+
+gameover = False
+win = False
+
+sat = []
+lines = []
+totalsat = 10
+start_time = 0
+endtime = 0
+currentsat = 0
+
+def create_sat():
+    global start_time
+    for i in range(totalsat):
+        sats = Actor('satlite')
+        sats.pos = randint(50,450),randint(50,450)
+        sat.append(sats)
+    start_time = time()
+
+def draw():
+    global endtime
+    screen.blit('spaceback',(0,0))
+    num = 1
+    for i in sat:
+        i.draw()
+        screen.draw.text(str(num),(i.pos[0],i.pos[1]+20))
+        num+=1
+    for i in lines:
+        screen.draw.line(i[0],i[1],('white'))
+    if currentsat<totalsat:
+        endtime= time()-start_time
+        screen.draw.text(str(round(endtime,2)),(50,50),fontsize = 20, color = 'white')
+    else:
+        screen.draw.text(str(round(endtime,2)),(50,50),fontsize = 20, color = 'white')
+    
+    if gameover:
+        screen.fill('yellow')
+        screen.draw.text('Times up!',color='red',fontsize=50,midtop = (250,250))
+
+    if win:
+        screen.fill('yellow')
+        screen.draw.text('You finished in time!',color='green',midtop = (250,250))
+        
+def update():
+    pass
+
+def timeup():
+    global gameover
+    global win
+    gameover=True
+    if currentsat==10:
+        win = True
+    
+
+clock.schedule(timeup,20)
+
+def on_mouse_down(pos):
+ 
+    global currentsat,lines,sat
+    
+    if currentsat<totalsat:
+        if sat[currentsat].collidepoint(pos):
+            if currentsat:
+                lines.append((sat[currentsat-1].pos,sat[currentsat].pos))
+            currentsat+=1
+        else:
+            lines = []
+            currentsat=0
+create_sat()
+
+pgzrun.go()
