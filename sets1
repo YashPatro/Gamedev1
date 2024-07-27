@@ -1,0 +1,45 @@
+#27/07/25
+l1 = [2,56,98,1,45,23]
+
+s1 = set(l1)
+print(s1)
+
+#adding elements to a set
+#doesn't support duplicate values
+s1.add(23)
+
+#accessing values(only checking for values)
+print(45 in s1)
+
+#how to remove elements from a set 
+
+s1.remove(1)
+
+#discard method will not throw error when the value is not present 
+
+s1.discard(29)
+print(s1)
+#cannot make changes to a set 
+#s1[2] = 81
+
+
+#set operations
+#union
+
+a = {1,2,3,4,5}
+b = {4,5,6,7,8}
+
+print(a.union(b))
+print(a|b)
+
+#intersection
+print(a.intersection(b))
+print(a&b)
+
+#difference
+print(a-b)
+print(a.difference(b))
+
+#symmetric difference
+print(a.symmetric_difference(b))
+print(a^b)
