@@ -1,0 +1,57 @@
+03/08/24
+import pgzrun,random
+
+
+HEIGHT = 600
+WIDTH = 600
+
+totallevels = 5
+currentlevel = 1
+startspeed = 10
+
+items = ['bag','batteryimg','bottle','crisps']
+win = False
+lose = False
+items2 = []
+animations = []
+
+def draw():
+    screen.clear()
+    screen.blit('recycle_back2',(0,0))
+    if win:
+        screen.draw.text('You won!',fontsize = 30, center = (300,300),color = 'red')
+    elif lose:
+        screen.draw.text('You lost! :(',fontsize = 30, center = (300,300),color = 'red')
+    else:
+        for i in items2:
+            i.draw()
+
+def makeitems(num_ext_items):
+    items_to_create = item_creator(num_ext_items)
+    item_img = image_loader(items_to_create)
+    layout_items(item_img)
+
+
+def item_creator(num_ext_items):
+    items_to_create = ['paperimg']
+    for i in range(num_ext_items):
+        option = random.choice(items)
+
+        items_to_create.append(option)
+    return items_to_create
+
+def image_loader(items_to_create):
+    item_img = []
+    for i in items_to_create:
+        img = Actor(i)
+        item_img.append(img)
+    return item_img
+
+def layout_items(items_layout):
+    gaps = len(items_layout)+1
+    gap_size = WIDTH/gaps
+    random.shuffle(items_layout)
+
+    for count,i in enumerate(items_layout,1):
+        xpos = (count*gap_size)
+        i.x = xpos
