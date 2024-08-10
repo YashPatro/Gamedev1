@@ -1,13 +1,13 @@
-03/08/24
 import pgzrun,random
 
+#03/08/24
 
 HEIGHT = 600
 WIDTH = 600
 
 totallevels = 5
 currentlevel = 1
-startspeed = 10
+startspeed = 7
 
 items = ['bag','batteryimg','bottle','crisps']
 win = False
@@ -26,10 +26,19 @@ def draw():
         for i in items2:
             i.draw()
 
+
+def update():
+    global items2
+    if len(items2)==0:
+        items2 = makeitems(currentlevel)
+
 def makeitems(num_ext_items):
     items_to_create = item_creator(num_ext_items)
     item_img = image_loader(items_to_create)
     layout_items(item_img)
+    animate_items(item_img)
+    
+    return item_img
 
 
 def item_creator(num_ext_items):
@@ -55,3 +64,46 @@ def layout_items(items_layout):
     for count,i in enumerate(items_layout,1):
         xpos = (count*gap_size)
         i.x = xpos
+#10/08/24
+
+def animate_items(items_animate):
+    global startspeed,currentlevel
+    for i in items_animate:
+        duration = startspeed - currentlevel
+        i.anchor = ('center','bottom')
+        animation = animate(i,duration = duration,on_finished = game_over,y = HEIGHT)
+
+        animations.append(animation)
+
+def game_over():
+    global lose
+    lose = True 
+
+def game_win():
+    global win,currentlevel,items2,animations
+    stop_animation(animations)
+    if currentlevel == totallevels:
+        win = True
+
+    else:
+        currentlevel+=1
+        items2 = []
+        animations = []
+
+def stop_animation(animations_stop):
+    for i in animations_stop:
+        if i.running:
+            i.stop
+
+def on_mouse_down(pos):
+    global items2
+    for i in items2:
+        if i.collidepoint(pos):
+            if 'paperimg' in i.image:
+                game_win()
+
+            else:
+                game_over()
+
+
+pgzrun.go()
