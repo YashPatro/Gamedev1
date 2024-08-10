@@ -1,0 +1,19 @@
+03/08/24
+
+l1 = ['apple','yash','banana','melon']
+
+for count,i in enumerate(l1,1):
+    print(count,i)
+
+#homework
+10/08/24
+l2 = []
+num = 1
+print('write me some citys and I will number them for you')
+for i in range(5):
+    j = input('city :')
+    l2.append(j)
+    num+=1
+
+for count,i in enumerate(l2,1):
+    print(count,i)
