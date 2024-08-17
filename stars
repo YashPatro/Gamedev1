@@ -1,0 +1,110 @@
+#17/08/24 - homework
+
+import pgzrun,random
+
+HEIGHT = 600
+WIDTH = 600
+
+startspeed = 8
+currentlevel = 1
+animation = []
+stars = ['orange_star','red_star','purple_star','blue_star','green_star']
+stars2 = []
+totallevels = 7
+win = False
+lose = False
+
+def draw():
+    screen.blit('spaceback',(0,0))
+
+    if win:
+        screen.clear()
+        screen.draw.text('You won !!!',(300,300), fontsize = 20,color = 'green')
+    elif lose:
+        screen.draw.text('You lost! :(',fontsize = 30,color = 'red')
+    else:
+        for i in stars2:
+            i.draw()   
+
+def update():
+     global stars2
+     if len(stars2)==0:
+        stars2 = make_stars(currentlevel)
+
+def make_stars(extra_stars):
+    global stars_create 
+
+    stars_create = stars_creator(extra_stars)
+    star_img = image_loader(stars_create)
+    layout_star(star_img)
+    animate_stars(star_img)
+
+
+def stars_creator(extra_stars):
+    stars_create = ['star']
+    for i in range(extra_stars):
+        option = random.choice(stars)
+
+        stars_create.append(option)
+    return stars_create
+
+
+def image_loader(stars_create):
+    star_img = []
+    for i in stars_create:
+        img = Actor(i)
+        star_img.append(img)
+    return star_img
+
+def layout_star(stars_layout):
+    num_gaps = len(stars_layout)+1
+    gap_size = WIDTH/num_gaps
+    random.shuffle(stars_layout)
+
+    for count,i in enumerate(stars_layout,1):
+        xpos = (count*gap_size)
+        i.x = xpos
+
+def animate_stars(stars_animate):
+    global startspeed,currentlevel,animation
+    for i in stars_animate:
+        duration = startspeed - currentlevel
+        i.anchor = ('center','bottom')
+        animations = animate(i,duration = duration,on_finished = game_over,y = HEIGHT)
+
+        animation.append(animations)
+
+
+def game_over():
+    global lose
+    lose = True 
+
+def game_win():
+    global win,currentlevel,stars2,animations
+    stop_animation(animations)
+    if currentlevel == totallevels:
+        win = True
+
+    else:
+        currentlevel+=1
+        stars2 = []
+        animations = []
+
+def stop_animation(animations_stop):
+    for i in animations_stop:
+        if i.running:
+            i.stop
+
+def on_mouse_down(pos):
+    global stars2
+    for i in stars2:
+        if i.collidepoint(pos):
+            if 'star' in i.image:
+                game_win()
+
+            else:
+                game_over()
+
+
+pgzrun.go()
+
