@@ -1,0 +1,25 @@
+'''
+#homework (revision) due 24/08/24
+line = {}
+
+with open('homework.txt','w') as file:
+    file.write('This is a sentence with some words and words that is not really a sentence but it is a sentence or sentence or sentence')
+
+with open('homework.txt','r') as file:
+    for i in file.readline():
+        line[i] = 0
+    
+    for i in file.readline():
+        if i in line:
+            line[i]+=1
+'''
+
+
+#24/08/24
+q = 'Heat, or thermal energy, can be transferred in different ways. How is heat moved in a liquid?|Convection|Evaporation|Conduction|Radiation'
+
+l = q.split('|')
+
+print(l)
+
+print(l.pop())
