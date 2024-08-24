@@ -1,0 +1,82 @@
+#17/08/24 and 24/08/24
+
+x = 355
+y = 86
+import os
+os.environ['SDL_VIDEO_WINDOW_POS'] = f'{x},{y}'
+
+
+import pgzrun
+
+TITLE = 'QUIZ'
+
+HEIGHT = 575
+WIDTH = 800
+
+q_file = 'questions.txt'
+q_append = []
+
+current_que = 0 
+question_count = 0
+scroll_msg = ''
+t_time = 10
+
+scroller_box = Rect(0,0,800,100)
+
+quiz_box = Rect(25,145,550,100)
+
+ans1 = Rect(25,290,250,100)
+ans2 = Rect(325,290,250,100)
+ans3 = Rect(25,435,250,100)
+ans4 = Rect(325,435,250,100)
+
+ans = [ans1,ans2,ans3,ans4]
+
+skip_box = Rect(600,290,150,245)
+
+time_box = Rect(600,145,150,100)
+
+def draw():
+    global scroll_msg
+
+    screen.clear()
+    screen.fill('black')
+    screen.draw.filled_rect(scroller_box,'light yellow')
+    screen.draw.filled_rect(quiz_box,'red')
+    screen.draw.filled_rect(skip_box,'green')
+    screen.draw.filled_rect(time_box,'sky blue')
+    for i in ans:
+        screen.draw.filled_rect(i,'light grey')
+    
+    scroll_msg = f'Welcome to the quiz, you are on Q:{current_que} of {question_count}'
+    screen.draw.textbox(scroll_msg, scroller_box, color='black')
+    screen.draw.textbox(str(t_time), time_box, color = 'dark blue')
+    screen.draw.textbox('skip', skip_box, color = 'dark green', angle = -90)
+
+def update():
+    scroller_box.x-=2
+    if scroller_box.x==-800:
+        scroller_box.x=800
+
+def read_q():
+    global    question_count
+
+    with open(q_file,'r') as f:
+        for i in f:
+            q_append.append(i)
+            question_count+=1
+
+def read_nq():
+    global current_que
+    current_que+=1
+
+    return q_append.pop(0).split('|')
+
+read_q()
+question = read_nq()
+
+print(question)
+
+pgzrun.go()
+
+    
