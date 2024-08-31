@@ -55,12 +55,15 @@ def draw():
     screen.draw.textbox(str(t_time), time_box, color = 'dark blue')
     screen.draw.textbox('skip', skip_box, color = 'dark green', angle = -90)
 
-    for i in question:
-        screen.draw.textbox(question[0], quiz_box, color='black')
-        screen.draw.textbox(question[1],ans1,color = 'black')
-        screen.draw.textbox(question[2],ans2,color = 'black')
-        screen.draw.textbox(question[3],ans3,color = 'black')
-        screen.draw.textbox(question[4],ans4,color = 'black')
+    screen.draw.textbox(
+        question[0].strip(), quiz_box,
+        color="white", shadow=(0.5,0.5),
+        scolor="dim grey"
+    )
+    index = 1
+    for answer_box in ans:
+        screen.draw.textbox(question[index].strip(), answer_box, color="black")
+        index = index + 1
 
 def update():
     scroller_box.x-=2
@@ -76,14 +79,14 @@ def read_q():
             question_count+=1
 
 def read_nq():
-    global current_que
+    global current_que,q_append
     current_que+=1
 
     return q_append.pop(0).split('|')
 
 #31/08/24
 def skip_q():
-    global question,t_time
+    global question,t_time,q_append
     if g_over==False and q_append:
         question = read_nq()
         t_time = 10
