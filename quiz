@@ -16,10 +16,12 @@ WIDTH = 800
 q_file = 'questions.txt'
 q_append = []
 
+score = 0 
 current_que = 0 
 question_count = 0
 scroll_msg = ''
 t_time = 10
+g_over = False
 
 scroller_box = Rect(0,0,800,100)
 
@@ -53,6 +55,13 @@ def draw():
     screen.draw.textbox(str(t_time), time_box, color = 'dark blue')
     screen.draw.textbox('skip', skip_box, color = 'dark green', angle = -90)
 
+    for i in question:
+        screen.draw.textbox(question[0], quiz_box, color='black')
+        screen.draw.textbox(question[1],ans1,color = 'black')
+        screen.draw.textbox(question[2],ans2,color = 'black')
+        screen.draw.textbox(question[3],ans3,color = 'black')
+        screen.draw.textbox(question[4],ans4,color = 'black')
+
 def update():
     scroller_box.x-=2
     if scroller_box.x==-800:
@@ -72,10 +81,57 @@ def read_nq():
 
     return q_append.pop(0).split('|')
 
+#31/08/24
+def skip_q():
+    global question,t_time
+    if g_over==False and q_append:
+        question = read_nq()
+        t_time = 10
+    else:
+        game_over()
+
+def correct_ans():
+    global question,t_time,q_append,score
+
+    score+=1
+    if q_append:
+        question = read_nq()
+        t_time=10
+    else:
+        game_over()
+
+def game_over():
+    global t_time,g_over,question
+    message = f'Gameover! You got {score} questions correct!'
+    question = [message,'-','-','-','-',5]
+    t_time = 0
+    g_over = True
+
+def on_mouse_down(pos):
+    index = 1
+    for i in ans:
+        if i.collidepoint(pos):
+            if index is int(question[5]):
+                correct_ans()
+            else:
+                game_over()
+
+        index+=1
+    if skip_box.collidepoint(pos):
+        skip_q()
+
+
+def timer():
+    global t_time
+    if t_time:
+        t_time-=1
+
+    else:
+        game_over()
+
 read_q()
 question = read_nq()
-
-print(question)
+clock.schedule_interval(timer,1)
 
 pgzrun.go()
 
